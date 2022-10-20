@@ -61,11 +61,24 @@ if (typeof argv.port !== 'number') {
   console.error('\nInvalid argument: `port` must be a number');
   process.exit(1);
 }
+function cleanHostUrl(url) {
+  let newUrl = url;
+  const protocol = url.split('://')[0];
+  if (protocol !== 'http' && protocol !== 'https') {
+    newUrl = 'http://'+ url;
+  }
+  const lastChar = newUrl.slice(-1);
+  if (lastChar === "/") {
+    newUrl = newUrl.slice(0, -1);
+  }
+  return newUrl;
+}
 
 (async () => {
+  cleanHostUrl(argv.host)
   const tunnel = await localtunnel({
     port: argv.port,
-    host: argv.host,
+    host: cleanHostUrl(argv.host),
     subdomain: argv.subdomain,
     local_host: argv.localHost,
     local_https: argv.localHttps,
