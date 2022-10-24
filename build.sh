@@ -20,6 +20,7 @@ function brun() {
   buildah run $node_container -- "$@"
 }
 
+podman run --rm -it  -v "$PWD":/usr/src/app/ trashnochados/nodejs:raw-node16 yarn install
 ## Set alpine as starting point
 buildah add $node_container ./bin /usr/ltc/bin
 buildah add $node_container ./lib /usr/ltc/lib
