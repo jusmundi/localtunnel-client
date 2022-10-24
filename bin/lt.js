@@ -74,7 +74,7 @@ function cleanHostUrl(url) {
   return newUrl;
 }
 
-(async () => {
+const main = async () => {
   cleanHostUrl(argv.host)
   const tunnel = await localtunnel({
     port: argv.port,
@@ -114,4 +114,21 @@ function cleanHostUrl(url) {
       console.log(new Date().toString(), info.method, info.path);
     });
   }
-})();
+}
+main();
+
+process.on('SIGINT', () => {
+    process.exit();
+});
+
+process.on('SIGTERM', () => {
+    process.exit();
+});
+
+process.on('uncaughtException', (err) => {
+    log.error(err);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    log.error(reason);
+});

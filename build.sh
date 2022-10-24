@@ -30,3 +30,4 @@ brun npm i -g /usr/ltc/ ## Set the link so the the nodejs module can be used as 
 
 ## Creating image
 buildah commit --rm $node_container "$image:$tag"
+echo "Created image: $image:$tag"
